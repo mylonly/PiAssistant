@@ -158,7 +158,7 @@ char* num2chiness(char* chiness,int num)
 	{
 		if( wei[i] == 1 && i == 1 && ct ==2 ) //如果当前输出十位，且十位为1
 		{	
-			strcat(chiness,dw[i])
+			strcat(chiness,dw[i]);
 		}
 		else if(wei[i] == 2 && i ==0 && ct == 1){
 			strcat(chiness,er);
