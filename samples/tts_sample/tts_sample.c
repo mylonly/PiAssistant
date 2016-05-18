@@ -134,6 +134,41 @@ int text_to_speech(const char* src_text, const char* des_path, const char* param
 	return ret;
 }
 
+char* num2chiness(char* chiness,int num)
+{
+	char dxsz[][4] = {"零","一","二","三","四","五","六","七","捌","玖"};
+    char dw[][4]  =  {"","拾","佰","仟"};
+    char wei[4];  //输入数字的每一位数字
+    int  num,ct;  //输入的数字及位数
+    int flag;     //输出“零”标志，不连接输出“零”
+
+	if( num < 0)      //如果是负数，退出程序
+		break;
+
+	if( num > 9999)  //如果超出范围，不处理
+		continue;
+
+	ct = 0;          //计算每一位数，统计总位数
+	while(num > 0)
+	{
+		wei[ct] = num % 10;
+		num /= 10;
+		ct++;
+	}
+		
+	flag = 0;  ////输出“零”标志复位
+	for( int i= ct -1; i>=0; i--) //从高位到低位输入
+	{
+		if( wei[i] == 1 && i == 1 && ct ==2 ) //如果当前输出十位，且十位为1
+			sprintf(chiness,"%s",dw[i]);    //只输出单位“拾”
+		else if( wei[i] > 0)       //否则，如果当前位数值大于0，输出数字和单位
+			sprintf(chiness,"%s%s",dxsz[wei[i]],dw[i]),flag = 0; //并且复位输出“零”标志
+		else if( i > 0 && flag ==0) // 如果不是个位，并且上一输出不是0
+			sprintf(chiness,"%s",dxsz[0]),flag=1; //输出“零”，并设置输出“零”标志
+	}
+    return chiness;
+}
+
 int main(int argc, char* argv[])
 {
 	int         ret                  = MSP_SUCCESS;
@@ -160,8 +195,14 @@ int main(int argc, char* argv[])
  	hour = timeinfo->tm_hour;
  	minute = timeinfo->tm_min;
  	second = timeinfo->tm_sec;
+	char* hourStr = malloc(100);
+	char* minuterStr = malloc(100);
+	num2chiness(hourStr,hour);
+	num2chiness(minuterStr,minute);
 	char* text =  malloc(1024); //合成文本
-	sprintf(text,"现在时间:%d点%d分",hour,minute);
+	sprintf(text,"现在时间:%s点%s分",hourStr,minuteStr);
+	
+
 	
 	/* 用户登录 */
 	ret = MSPLogin(NULL, NULL, login_params);//第一个参数是用户名，第二个参数是密码，第三个参数是登录参数，用户名和密码可在http://open.voicecloud.cn注册获取
@@ -188,7 +229,7 @@ exit:
 	printf("按任意键退出 ...\n");
 	getchar();
 	MSPLogout(); //退出登录
-
+	
 	return 0;
 }
 
