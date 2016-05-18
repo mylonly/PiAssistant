@@ -138,6 +138,7 @@ char* num2chiness(char* chiness,int num)
 {
 	char dxsz[][4] = {"零","一","二","三","四","五","六","七","捌","玖"};
     char dw[][4]  =  {"","拾","佰","仟"};
+	char* er= "两";
     char wei[4];  //输入数字的每一位数字
     int ct;  //输入的数字及位数
     int flag;     //输出“零”标志，不连接输出“零”
@@ -152,14 +153,20 @@ char* num2chiness(char* chiness,int num)
 		
 	flag = 0;  ////输出“零”标志复位
 	int i;
+	char* p = chiness;
 	for( i = ct -1; i>=0; i--) //从高位到低位输入
 	{
 		if( wei[i] == 1 && i == 1 && ct ==2 ) //如果当前输出十位，且十位为1
-			sprintf(chiness,"%s",dw[i]);    //只输出单位“拾”
+			sprintf(p,"%s",dw[i]);    //只输出单位“拾”
+			p+=sizeof(dw[i]);
+		else if(wei[i] == 2 && i ==0 && ct == 1){
+			sprintf(p,"%s",er);
+			p+=sizeof(er);
+		}
 		else if( wei[i] > 0)       //否则，如果当前位数值大于0，输出数字和单位
-			sprintf(chiness,"%s%s",dxsz[wei[i]],dw[i]),flag = 0; //并且复位输出“零”标志
-		else if( i > 0 && flag ==0) // 如果不是个位，并且上一输出不是0
-			sprintf(chiness,"%s",dxsz[0]),flag=1; //输出“零”，并设置输出“零”标志
+			sprintf(p,"%s%s",dxsz[wei[i]],dw[i]),flag = 0; //并且复位输出“零”标志
+			p+=sizeof(dwsz[wei[i]]);
+			p+=sizeof(dw[i]);
 	}
     return chiness;
 }
