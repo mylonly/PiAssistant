@@ -196,7 +196,7 @@ int main(int argc, char* argv[])
  	minute = timeinfo->tm_min;
  	second = timeinfo->tm_sec;
 	char* hourStr = malloc(100);
-	char* minuterStr = malloc(100);
+	char* minuteStr = malloc(100);
 	num2chiness(hourStr,hour);
 	num2chiness(minuterStr,minute);
 	char* text =  malloc(1024); //合成文本
