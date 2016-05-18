@@ -157,16 +157,18 @@ char* num2chiness(char* chiness,int num)
 	for( i = ct -1; i>=0; i--) //从高位到低位输入
 	{
 		if( wei[i] == 1 && i == 1 && ct ==2 ) //如果当前输出十位，且十位为1
-			sprintf(p,"%s",dw[i]);    //只输出单位“拾”
+		{	sprintf(p,"%s",dw[i]);    //只输出单位“拾”
 			p+=sizeof(dw[i]);
+		}
 		else if(wei[i] == 2 && i ==0 && ct == 1){
 			sprintf(p,"%s",er);
 			p+=sizeof(er);
 		}
 		else if( wei[i] > 0)       //否则，如果当前位数值大于0，输出数字和单位
-			sprintf(p,"%s%s",dxsz[wei[i]],dw[i]),flag = 0; //并且复位输出“零”标志
-			p+=sizeof(dxsz[wei[i]]);
+		{	sprintf(p,"%s%s",dxsz[wei[i]],dw[i]),flag = 0; //并且复位输出“零”标志
+			p+=sizeof(dxszmodi[wei[i]]);
 			p+=sizeof(dw[i]);
+		}
 	}
     return chiness;
 }
