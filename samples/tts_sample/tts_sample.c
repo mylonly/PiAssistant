@@ -165,7 +165,7 @@ char* num2chiness(char* chiness,int num)
 		}
 		else if( wei[i] > 0)       //否则，如果当前位数值大于0，输出数字和单位
 			sprintf(p,"%s%s",dxsz[wei[i]],dw[i]),flag = 0; //并且复位输出“零”标志
-			p+=sizeof(dwsz[wei[i]]);
+			p+=sizeof(dxsz[wei[i]]);
 			p+=sizeof(dw[i]);
 	}
     return chiness;
