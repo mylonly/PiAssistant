@@ -151,7 +151,8 @@ char* num2chiness(char* chiness,int num)
 	}
 		
 	flag = 0;  ////输出“零”标志复位
-	for( int i= ct -1; i>=0; i--) //从高位到低位输入
+	int i;
+	for( i = ct -1; i>=0; i--) //从高位到低位输入
 	{
 		if( wei[i] == 1 && i == 1 && ct ==2 ) //如果当前输出十位，且十位为1
 			sprintf(chiness,"%s",dw[i]);    //只输出单位“拾”
@@ -192,7 +193,7 @@ int main(int argc, char* argv[])
 	char* hourStr = malloc(100);
 	char* minuteStr = malloc(100);
 	num2chiness(hourStr,hour);
-	num2chiness(minuterStr,minute);
+	num2chiness(minuteStr,minute);
 	char* text =  malloc(1024); //合成文本
 	sprintf(text,"现在时间:%s点%s分",hourStr,minuteStr);
 
