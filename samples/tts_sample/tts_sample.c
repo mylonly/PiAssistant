@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 
 #include "qtts.h"
 #include "msp_cmn.h"
@@ -150,8 +151,18 @@ int main(int argc, char* argv[])
 	*/
 	const char* session_begin_params = "voice_name = xiaoyan, text_encoding = UTF8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
 	const char* filename             = "tts_sample.wav"; //合成的语音文件名称
-	const char* text                 = "亲爱的用户，您好，这是一个语音合成示例，感谢您对科大讯飞语音技术的支持！科大讯飞是亚太地区最大的语音上市公司，股票代码：002230"; //合成文本
-
+	
+	time_t nowtime;
+ 	struct tm *timeinfo;
+ 	time( &nowtime );
+ 	timeinfo = localtime( &nowtime );
+ 	int hour, minute, second;
+ 	hour = timeinfo->tm_hour;
+ 	minute = timeinfo->tm_min;
+ 	second = timeinfo->tm_sec;
+	char* text =  malloc(1024); //合成文本
+	sprintf(text,"现在时间:%d点%d分",hour,minute);
+	
 	/* 用户登录 */
 	ret = MSPLogin(NULL, NULL, login_params);//第一个参数是用户名，第二个参数是密码，第三个参数是登录参数，用户名和密码可在http://open.voicecloud.cn注册获取
 	if (MSP_SUCCESS != ret)

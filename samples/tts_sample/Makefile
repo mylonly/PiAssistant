@@ -11,11 +11,7 @@ CROSS_COMPILE =
 CFLAGS = -g -Wall -I$(DIR_INC)
 
 #可根据实际需要修改，选择所需平台SDK，默认为x64或x86平台。
-ifdef LINUX64
-LDFLAGS := -L$(DIR_LIB)/x64
-else
-LDFLAGS := -L$(DIR_LIB)/x86 
-endif
+LDFLAGS := -L$(DIR_LIB)/RaspberryPi
 
 LDFLAGS += -lmsc -lrt -ldl -lpthread
 
