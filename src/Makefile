@@ -21,7 +21,7 @@ $(BIN_TARGET) : $(OBJECTS)
 	$(CROSS_COMPILE)gcc $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 %.o : %.c
-	$(CROSS_COMPILE)gcc -c $(CFLAGS) $< -o $@
+	$(CROSS_COMPILE)gcc -c $(CFLAGS) $< -shared -o libtts.so
 clean:
 	@rm -f *.o $(BIN_TARGET)
 
