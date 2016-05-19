@@ -157,7 +157,7 @@ int text2wav(char* text)
 	if (MSP_SUCCESS != ret)
 	{
 		printf("MSPLogin failed, error code: %d.\n", ret);
-		goto exit ;//登录失败，退出登录
+		return 1;
 	}
 	/* 文本合成 */
 	printf("开始合成 ...\n");
@@ -168,11 +168,7 @@ int text2wav(char* text)
 	}
 	printf("合成完毕\n");
 
-exit:
-	printf("按任意键退出 ...\n");
-	getchar();
 	MSPLogout(); //退出登录
-	
 	return 0;
 }
 
