@@ -1,4 +1,12 @@
 #!/usr/bin/sh
 
-python src/clockSpeaker.py &
-mplayer src/tts.wav
+file="./tts/libtts.so"
+
+if[ ! -f "$file" ]; then
+    cd ./tts/
+    make &
+    cd ../    
+fi
+
+python ./src/clockSpeaker.py &
+mplayer ./src/tts.wav
