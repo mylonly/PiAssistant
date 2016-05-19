@@ -1,10 +1,10 @@
 #common makefile header
 
-DIR_INC = ./include
-DIR_BIN = ./bin
-DIR_LIB = ./libs
+DIR_INC = ../include
+DIR_BIN = ../bin
+DIR_LIB = ../libs
 
-TARGET	= tts_sample
+TARGET	= tts
 BIN_TARGET = $(DIR_BIN)/$(TARGET)
 
 CROSS_COMPILE = 
