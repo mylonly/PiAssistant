@@ -134,45 +134,7 @@ int text_to_speech(const char* src_text, const char* des_path, const char* param
 	return ret;
 }
 
-char* num2chiness(char* chiness,int num)
-{
-	char dxsz[][4] = {"零","一","二","三","四","五","六","七","捌","玖"};
-    char dw[][4]  =  {"","拾","佰","仟"};
-	char* er= "两";
-    char wei[4];  //输入数字的每一位数字
-    int ct;  //输入的数字及位数
-    int flag;     //输出“零”标志，不连接输出“零”
-
-	ct = 0;          //计算每一位数，统计总位数
-	while(num > 0)
-	{
-		wei[ct] = num % 10;
-		num /= 10;
-		ct++;
-	}
-		
-	flag = 0;  ////输出“零”标志复位
-	int i;
-	char* p = chiness;
-	for( i = ct -1; i>=0; i--) //从高位到低位输入
-	{
-		if( wei[i] == 1 && i == 1 && ct ==2 ) //如果当前输出十位，且十位为1
-		{	
-			strcat(chiness,dw[i]);
-		}
-		else if(wei[i] == 2 && i ==0 && ct == 1){
-			strcat(chiness,er);
-		}
-		else if( wei[i] > 0)       //否则，如果当前位数值大于0，输出数字和单位
-		{	
-			strcat(chiness,dxsz[wei[i]]);
-			strcat(chiness,dw[i]);
-		}
-	}
-    return chiness;
-}
-
-int main(int argc, char* argv[])
+int text2wav(char* text)
 {
 	int         ret                  = MSP_SUCCESS;
 	const char* login_params         = "appid = 573b34ce, work_dir = .";//登录参数,appid与msc库绑定,请勿随意改动
@@ -188,23 +150,8 @@ int main(int argc, char* argv[])
 	* 详细参数说明请参阅《iFlytek MSC Reference Manual》
 	*/
 	const char* session_begin_params = "voice_name = xiaoyan, text_encoding = UTF8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
-	const char* filename             = "tts_sample.wav"; //合成的语音文件名称
+	const char* filename             = "tts.wav"; //合成的语音文件名称
 	
-	time_t nowtime;
- 	struct tm *timeinfo;
- 	time( &nowtime );
- 	timeinfo = localtime( &nowtime );
- 	int hour, minute, second;
- 	hour = timeinfo->tm_hour;
- 	minute = timeinfo->tm_min;
- 	second = timeinfo->tm_sec;
-	char* hourStr = malloc(100);
-	char* minuteStr = malloc(100);
-	num2chiness(hourStr,hour);
-	num2chiness(minuteStr,minute);
-	char* text =  malloc(1024); //合成文本
-	sprintf(text,"现在时间:%s点%s分",hourStr,minuteStr);
-
 	/* 用户登录 */
 	ret = MSPLogin(NULL, NULL, login_params);//第一个参数是用户名，第二个参数是密码，第三个参数是登录参数，用户名和密码可在http://open.voicecloud.cn注册获取
 	if (MSP_SUCCESS != ret)
@@ -212,11 +159,6 @@ int main(int argc, char* argv[])
 		printf("MSPLogin failed, error code: %d.\n", ret);
 		goto exit ;//登录失败，退出登录
 	}
-	printf("\n###########################################################################\n");
-	printf("## 语音合成（Text To Speech，TTS）技术能够自动将任意文字实时转换为连续的 ##\n");
-	printf("## 自然语音，是一种能够在任何时间、任何地点，向任何人提供语音信息服务的  ##\n");
-	printf("## 高效便捷手段，非常符合信息时代海量数据、动态更新和个性化查询的需求。  ##\n");
-	printf("###########################################################################\n\n");
 	/* 文本合成 */
 	printf("开始合成 ...\n");
 	ret = text_to_speech(text, filename, session_begin_params);

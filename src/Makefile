@@ -18,10 +18,8 @@ LDFLAGS += -lmsc -lrt -ldl -lpthread
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 
 $(BIN_TARGET) : $(OBJECTS)
-	$(CROSS_COMPILE)gcc $(CFLAGS) $^ -o $@ $(LDFLAGS)
+        $(CROSS_COMPILE)gcc $(CFLAGS) $^ -shared -o libtts.so $(LDFLAGS)
 
-%.o : %.c
-	$(CROSS_COMPILE)gcc -c $(CFLAGS) $< -shared -o libtts.so
 clean:
 	@rm -f *.o $(BIN_TARGET)
 
