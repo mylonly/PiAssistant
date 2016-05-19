@@ -149,7 +149,7 @@ int text2wav(char* text)
 	*
 	* 详细参数说明请参阅《iFlytek MSC Reference Manual》
 	*/
-	const char* session_begin_params = "voice_name = xiaoyan, text_encoding = UTF8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
+	const char* session_begin_params = "voice_name = xiaoyan, text_encoding = UTF8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 0";
 	const char* filename             = "tts.wav"; //合成的语音文件名称
 	
 	/* 用户登录 */
